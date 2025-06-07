@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>排序算法可视化系统</title>
+</head>
+
+<body>
+  <div id="app">
+    <div class="header">
+      <span id="title"><a href="index.html">排序算法可视化</a></span>
+      <input type="text" id="input-data" placeholder="请输入数据，用英文逗号分隔">
+      <button id="submit-button">提交</button>
+      <button id="compare-button"><a href="./src/compare/compare.html">对比排序</a></button>
+      <label for="algorightm-select">选择算法：</label>
+      <select id="algorithm-select">
+        <option value="selectionSort">选择排序</option>
+        <option value="bubbleSort">冒泡排序</option>
+        <option value="insertionSort">插入排序</option>
+        <option value="quickSort">快速排序</option>
+        <option value="mergeSort">归并排序</option>
+        <option value="bucketSort">桶排序</option>
+        <option value="countingSort">计数排序</option>
+        <option value="radixSort">基数排序</option>
+        <option value="shellSort">希尔排序</option>
+        <option value="heapSort">堆排序</option>
+      </select>
+      <button id="reset-button">重置</button>
+    </div>
+
+    <div class="content">
+      <div class="left-part card">
+        <h2>算法代码</h2>
+        <pre id="code-display"></pre>
+      </div>
+      <div class="right-part card">
+        <h2>可视化</h2>
+        <div id="chart-container"></div>
+        <div id="step-into">
+          当前步骤: <span id="current-step-number">0</span> / <span id="total-steps">0</span><br>
+          操作描述: <span id="step-description"></span>
+        </div>
+        <div>
+          <input type="text" id="interval-time" placeholder="间隔时间（毫秒）">
+          <button id="start-button">自动排序</button>
+          <button id="prev-button">上一步</button>
+          <button id="next-button">下一步</button>
+          <button id="stop-button">停止排序</button>
+        </div>
+        <div>
+          <h3>颜色图例:</h3>
+          <div id="color-description">
+            <span style="background-color:#a0aec0;">默认/未操作</span>
+            <span style="background-color:#fcd34d;">比较中</span>
+            <span style="background-color:#f97316;">交换中</span>
+            <span style="background-color:#dc2626;">基准元素 (快速排序)</span>
+            <span style="background-color:#34d399;">已排序/最终位置</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+
+</html>

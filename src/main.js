@@ -82,22 +82,6 @@ DOM.stopButton.on('click', () => {
 });
 
 /**
- * 记录算法执行的每一步状态
- * @param {Array<number>} currentArray - 当前数组的副本
- * @param {string} description - 当前操作的描述
- * @param {Array<number>} highlightLines - 需要高亮的代码行号数组 (从1开始)
- * @param {Array<string>} barColors - 对应每个柱子的颜色数组
- */
-export default function recordStep(currentArray, description, highlightLines = [], barColors = []) {
-    steps.push({
-        array: [...currentArray], // 确保是数组的深拷贝
-        description: description,
-        highlightLines: highlightLines,
-        barColors: barColors.length > 0 ? [...barColors] : Array(currentArray.length).fill(BAR_COLOR_DEFAULT)
-    });
-}
-
-/**
  * 初始化或重置可视化系统
  */
 export async function initialize() {
@@ -110,37 +94,35 @@ export async function initialize() {
     // 根据选择的算法预计算所有步骤
     switch (currentAlgorithm) {
         case 'selectionSort':
-            selectionSortAlgorithm(arrayCopy);
+            selectionSortAlgorithm(arrayCopy, steps);
             break;
         case 'bubbleSort':
-            bubbleSortAlgorithm(arrayCopy);
+            bubbleSortAlgorithm(arrayCopy, steps);
             break;
         case 'insertionSort':
-            insertionSortAlgorithm(arrayCopy);
+            insertionSortAlgorithm(arrayCopy, steps);
             break;
         case 'quickSort':
-            quickSortAlgorithm(arrayCopy);
+            quickSortAlgorithm(arrayCopy, steps);
             break;
         case 'mergeSort':
-            mergeSortAlgorithm(arrayCopy);
+            mergeSortAlgorithm(arrayCopy, steps);
             break;
         case 'bucketSort':
-            bucketSortAlgorithm(arrayCopy);
+            bucketSortAlgorithm(arrayCopy, steps);
             break;
         case 'countingSort':
-            countingSortAlgorithm(arrayCopy);
+            countingSortAlgorithm(arrayCopy, steps);
             break;
         case 'radixSort':
-            radixSortAlgorithm(arrayCopy);
+            radixSortAlgorithm(arrayCopy, steps);
             break;
         case 'shellSort':
-            shellSortAlgorithm(arrayCopy);
+            shellSortAlgorithm(arrayCopy, steps);
             break;
         case 'heapSort':
-            heapSortAlgorithm(arrayCopy);
+            heapSortAlgorithm(arrayCopy, steps);
             break;
-        default:
-            console.error('无效的排序算法');
     }
 
     DOM.totalStepsSpan.textContent = steps.length; // 更新总步骤数

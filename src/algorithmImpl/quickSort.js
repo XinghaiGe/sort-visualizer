@@ -1,5 +1,5 @@
 import recordStep from "../main";
-import { BAR_COLOR_COMPARING, BAR_COLOR_DEFAULT,BAR_COLOR_PIVOT,BAR_COLOR_SORTED,BAR_COLOR_SWAPPING } from "../colorDefine";
+import BAR_COLOR from "../colorDefine";
 import { steps } from "../main";
 
 /**
@@ -14,26 +14,26 @@ export default function quickSortAlgorithm(arr, low, high, initialColors = []) {
     if (high === undefined) high = arr.length - 1;
 
     if (initialColors.length === 0) {
-        recordStep(arr, "开始快速排序", [1, 2], Array(arr.length).fill(BAR_COLOR_DEFAULT));
+        recordStep(arr, "开始快速排序", [1, 2], Array(arr.length).fill(BAR_COLOR.DEFAULT));
     }
 
     if (low < high) {
-        recordStep(arr, `对子数组 [${low}, ${high}] 进行分区`, [3], initialColors.length > 0 ? initialColors : Array(arr.length).fill(BAR_COLOR_DEFAULT));
+        recordStep(arr, `对子数组 [${low}, ${high}] 进行分区`, [3], initialColors.length > 0 ? initialColors : Array(arr.length).fill(BAR_COLOR.DEFAULT));
         let pi = partition(arr, low, high, initialColors);
 
         let currentColors = steps[steps.length - 1].barColors; // 获取partition后的颜色状态
-        recordStep(arr, `基准元素 ${arr[pi]} 位于正确位置 (索引 ${pi})`, [4], currentColors.map((c, idx) => idx === pi ? BAR_COLOR_SORTED : c));
+        recordStep(arr, `基准元素 ${arr[pi]} 位于正确位置 (索引 ${pi})`, [4], currentColors.map((c, idx) => idx === pi ? BAR_COLOR.SORTED : c));
 
         quickSortAlgorithm(arr, low, pi - 1, currentColors); // 递归左侧
         quickSortAlgorithm(arr, pi + 1, high, currentColors); // 递归右侧
     } else if (low === high) {
         // 单个元素，视为已排序
-        let currentColors = steps.length > 0 ? steps[steps.length - 1].barColors : Array(arr.length).fill(BAR_COLOR_DEFAULT);
-        recordStep(arr, `元素 ${arr[low]} (索引 ${low}) 视为已排序`, [3], currentColors.map((c, idx) => idx === low ? BAR_COLOR_SORTED : c));
+        let currentColors = steps.length > 0 ? steps[steps.length - 1].barColors : Array(arr.length).fill(BAR_COLOR.DEFAULT);
+        recordStep(arr, `元素 ${arr[low]} (索引 ${low}) 视为已排序`, [3], currentColors.map((c, idx) => idx === low ? BAR_COLOR.SORTED : c));
     }
 
-    if (low === 0 && high === arr.length - 1 && arr.every((_, i) => steps[steps.length - 1].barColors[i] === BAR_COLOR_SORTED)) {
-        recordStep(arr, "快速排序完成", [6], Array(arr.length).fill(BAR_COLOR_SORTED));
+    if (low === 0 && high === arr.length - 1 && arr.every((_, i) => steps[steps.length - 1].barColors[i] === BAR_COLOR.SORTED)) {
+        recordStep(arr, "快速排序完成", [6], Array(arr.length).fill(BAR_COLOR.SORTED));
     }
 }
 
@@ -49,31 +49,31 @@ function partition(arr, low, high, initialColors) {
     let pivot = arr[high];
     let i = (low - 1);
 
-    let colors = initialColors.length > 0 ? [...initialColors] : Array(arr.length).fill(BAR_COLOR_DEFAULT);
-    colors[high] = BAR_COLOR_PIVOT; // 标记基准
+    let colors = initialColors.length > 0 ? [...initialColors] : Array(arr.length).fill(BAR_COLOR.DEFAULT);
+    colors[high] = BAR_COLOR.PIVOT; // 标记基准
     recordStep(arr, `选择 ${pivot} (索引 ${high}) 作为基准`, [11], colors);
 
     for (let j = low; j < high; j++) {
-        colors = initialColors.length > 0 ? [...initialColors] : Array(arr.length).fill(BAR_COLOR_DEFAULT);
-        colors[high] = BAR_COLOR_PIVOT; // 标记基准
-        colors[j] = BAR_COLOR_COMPARING; // 标记当前比较元素
-        if (i >= low) colors[i] = BAR_COLOR_COMPARING; // 标记i的位置
+        colors = initialColors.length > 0 ? [...initialColors] : Array(arr.length).fill(BAR_COLOR.DEFAULT);
+        colors[high] = BAR_COLOR.PIVOT; // 标记基准
+        colors[j] = BAR_COLOR.COMPARING; // 标记当前比较元素
+        if (i >= low) colors[i] = BAR_COLOR.COMPARING; // 标记i的位置
 
         recordStep(arr, `比较元素 ${arr[j]} (索引 ${j}) 和基准 ${pivot}`, [16], colors);
 
         if (arr[j] <= pivot) {
             i++;
-            colors[i] = BAR_COLOR_SWAPPING; // 标记i的位置
-            colors[j] = BAR_COLOR_SWAPPING; // 标记j的位置
+            colors[i] = BAR_COLOR.SWAPPING; // 标记i的位置
+            colors[j] = BAR_COLOR.SWAPPING; // 标记j的位置
             recordStep(arr, `元素 ${arr[j]} 小于或等于基准，交换 ${arr[i]} 和 ${arr[j]}`, [18, 20], colors);
             [arr[i], arr[j]] = [arr[j], arr[i]];
             recordStep(arr, `交换完成`, [20], colors);
         }
     }
 
-    colors = initialColors.length > 0 ? [...initialColors] : Array(arr.length).fill(BAR_COLOR_DEFAULT);
-    colors[high] = BAR_COLOR_SWAPPING; // 标记基准
-    colors[i + 1] = BAR_COLOR_SWAPPING; // 标记i+1的位置
+    colors = initialColors.length > 0 ? [...initialColors] : Array(arr.length).fill(BAR_COLOR.DEFAULT);
+    colors[high] = BAR_COLOR.SWAPPING; // 标记基准
+    colors[i + 1] = BAR_COLOR.SWAPPING; // 标记i+1的位置
     recordStep(arr, `将基准 ${pivot} 交换到正确位置 (索引 ${i + 1})`, [24], colors);
     [arr[i + 1], arr[high]] = [arr[high], arr[i + 1]];
     recordStep(arr, `基准放置完成`, [24], colors);

@@ -1,19 +1,19 @@
 import { DOM } from './dom.js';
 import CanvasJS from '@canvasjs/charts';
-import {highlightCode} from './codeDisplay.js';
+import { highlightCode } from './codeDisplay.js';
 
 let chart = null; // canvasjs实例
 
 /**
  * 更新可视化界面（代码高亮、步骤信息、图表）
  */
-export default async function updateVisualization(currentAlgorithm, steps, currentStepIndex) {
+export default async function updateVisualization(currentAlgorithm, steps, currentStepIndex, currentStepNumberSpan) {
     console.log(steps);
     if (steps.length === 0) {
         // 如果没有步骤，清空显示
         DOM.currentStepNumberSpan.textContent = 0;
-        stepDescriptionSpan.textContent = "请选择算法并点击重置";
-        codeDisplay.innerHTML = "";
+        DOM.stepDescriptionSpan.textContent = "请选择算法并点击重置";
+        DOM.codeDisplay.innerHTML = "";
         if (chart) chart.destroy();
         chart = null;
         return;

@@ -19,8 +19,8 @@ let initialArray = [9, 2, 7, 5, 1, 8, 3, 10, 4, 6]; // 初始化数组
 let currentAlgorithm = 'selectionSort'; // 当前选择的算法
 export let steps = []; // 存储所有算法步骤的数组
 let currentStepIndex = 0; // 当前步骤的索引
-let chart = null; // CanvasJS 图表实例
 let animationInterval = null; // 动画定时器
+let currentStepNumberSpan = DOM.currentStepNumberSpan;
 
 // 添加相关事件监听器
 DOM.submitButton.on('click', () => {
@@ -126,13 +126,14 @@ export async function initialize() {
     }
 
     DOM.totalStepsSpan.textContent = steps.length; // 更新总步骤数
-    await updateVisualization(currentAlgorithm, steps, currentStepIndex); // 更新显示
+    await updateVisualization(currentAlgorithm, steps, currentStepIndex, currentStepNumberSpan); // 更新显示
 }
 
 // 页面加载完成后初始化
 window.onload = () => {
     initialize();
-    $('#input-data').val('5,4,3,1,1,2');
-    $('#submit-button').click();
-    $('#next-button').click();
+    // $('#input-data').val('5,4,3,1,1,2');
+    // $('#submit-button').click();
+    // // $('#next-button').click();
+    // $('#start-button').click();
 };

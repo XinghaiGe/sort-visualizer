@@ -1,3 +1,13 @@
+### 如何运行
+
+```shell
+npm install
+```
+
+```shell
+npm run dev
+```
+
 ### 代码结构
 
 ```
